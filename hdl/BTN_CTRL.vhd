@@ -59,10 +59,10 @@ architecture Behavioral of BTN_CTRL is
 
     -- Limits
     constant ROW_MIN : UNSIGNED(3 downto 0) := (others => '0');
-    constant ROW_MAX : UNSIGNED(3 downto 0) := "1111";
+    constant ROW_MAX : UNSIGNED(3 downto 0) := "1110"; -- 14
 
     constant COL_MIN : UNSIGNED(4 downto 0) := (others => '0');
-    constant COL_MAX : UNSIGNED(4 downto 0) := "10100";
+    constant COL_MAX : UNSIGNED(4 downto 0) := "10011"; -- 19
 
 begin
 
