@@ -24,9 +24,16 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity top is
     Port (CLK : in STD_LOGIC;
+          -- Movement Control Inputs
           LEFT, RIGHT, UP, DOWN : in STD_LOGIC;
+          
+          -- VGA Outputs
           VS, HS : out STD_LOGIC;
-          R, G, B : out STD_LOGIC_VECTOR(3 downto 0)
+          R, G, B : out STD_LOGIC_VECTOR(3 downto 0);
+          
+          -- Seven Segment Display Outputs
+          SEG_DISP : out std_logic_vector(7 downto 1);
+          AN : out STD_LOGIC_VECTOR(7 downto 0)
     );
 end top;
 
@@ -63,6 +70,16 @@ architecture Behavioral of top is
         );
     end component;
     
+    component SEV_SEG_CTRL 
+        port (
+            CLK : in STD_LOGIC;
+            COL : in STD_LOGIC_VECTOR(4 downto 0);
+            ROW : in STD_LOGIC_VECTOR(3 downto 0);
+            SEG_DISP : out std_logic_vector(7 downto 1);
+            AN : out STD_LOGIC_VECTOR(7 downto 0)
+        );
+    end component;    
+    
     signal DISP_STATUS : STD_LOGIC := '0';
     signal X_COUNTER, Y_COUNTER : STD_LOGIC_VECTOR(9 downto 0) := "0000000000";
     
@@ -98,6 +115,14 @@ begin
         DOWN => DOWN,
         COL => COL,
         ROW => ROW
+    );
+         
+    SEG_CONTROL : SEV_SEG_CTRL port map (
+        CLK => CLK,
+        COL => COL,
+        ROW => ROW,
+        SEG_DISP => SEG_DISP,
+        AN => AN
     );
     
 end Behavioral;
